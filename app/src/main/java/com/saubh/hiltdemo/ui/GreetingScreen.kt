@@ -9,5 +9,5 @@ fun GreetingScreen(
     viewModel: UserViewModel = hiltViewModel()
 ) {
     val message = viewModel.getData()
-    Text(text = message)
+    Text(text = viewModel.string)
 }

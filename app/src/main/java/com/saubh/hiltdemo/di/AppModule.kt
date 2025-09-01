@@ -1,5 +1,6 @@
 package com.saubh.hiltdemo.di
 
+import com.saubh.hiltdemo.data.Test
 import com.saubh.hiltdemo.data.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -15,5 +16,11 @@ object AppModule {
     @Singleton
     fun provideUserRepository(): UserRepository {
         return UserRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTest() : Test {
+        return Test()
     }
 }
