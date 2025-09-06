@@ -36,12 +36,13 @@ fun AppNavigator(navController: NavHostController, startDestination: String) {
             )
         ) { entry ->
             val showCard = entry.arguments?.getBoolean("showCard") ?: false
+            val instanceId = entry.arguments?.getString("instanceId") ?: "unknown"
+
             Screen1(
                 modifier = Modifier.fillMaxSize(),
                 showCard = showCard,
-                onToggleCard = {
-                    navController.navigate("${AppDestinations.SCREEN_1}/${System.currentTimeMillis()}?showCard=${!showCard}")
-                }
+                instanceId = instanceId,
+                navController = navController
             )
         }
 
@@ -53,7 +54,7 @@ fun AppNavigator(navController: NavHostController, startDestination: String) {
                 }
             )
         ) {
-            Screen2()
+            Screen2(navController = navController)
         }
     }
-}
+ }

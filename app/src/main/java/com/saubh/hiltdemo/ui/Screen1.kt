@@ -5,15 +5,22 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.saubh.hiltdemo.AppDestinations
+import com.saubh.hiltdemo.utils.NotificationUtils
 import kotlin.random.Random
 
 @Composable
 fun Screen1(
     modifier: Modifier = Modifier,
     showCard: Boolean = false,
-    onToggleCard: () -> Unit
+    instanceId: String = "",
+    navController: NavController? = null
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -24,6 +31,11 @@ fun Screen1(
         Text(
             if (showCard) "Screen 1 with Card" else "Screen 1",
             style = MaterialTheme.typography.headlineMedium
+        )
+
+        Text(
+            "Instance ID: $instanceId",
+            style = MaterialTheme.typography.bodyMedium
         )
 
         if (showCard) {
@@ -40,13 +52,39 @@ fun Screen1(
                     Text("Random Things", style = MaterialTheme.typography.titleLarge)
                     Text("Random Number: ${Random.nextInt(1, 100)}")
                     Text("Random Boolean: ${Random.nextBoolean()}")
-                    Text("Random Double: ${String.format("%.2f", Random.nextDouble())}")
                 }
             }
         }
 
-        Button(onClick = onToggleCard) {
-            Text(if (showCard) "Hide Card" else "Show Card")
+        Button(onClick = {
+            navController?.let {
+                val newInstanceId = System.currentTimeMillis().toString()
+                it.navigate("${AppDestinations.SCREEN_1}/$newInstanceId?showCard=${!showCard}")
+            }
+        }) {
+            Text(if (showCard) "Hide Card (New Version)" else "Show Card (New Version)")
+        }
+
+        Button(onClick = {
+            navController?.let {
+                NotificationUtils.showNotification(context, "screen1", 4)
+                val newInstanceId = System.currentTimeMillis().toString()
+                it.navigate("${AppDestinations.SCREEN_1}/$newInstanceId?showCard=true")
+            }
+        }) {
+            Text("Open Another Screen 1 (Stacked)")
+        }
+
+        Button(onClick = {
+            navController?.navigate(AppDestinations.SCREEN_2)
+        }) {
+            Text("Go to Screen 2")
+        }
+
+        Button(onClick = {
+            navController?.popBackStack()
+        }) {
+            Text("Back")
         }
     }
 }
