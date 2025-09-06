@@ -43,6 +43,7 @@ fun MainContentScreen(navController: NavHostController, viewModel: MainViewModel
 
         Button(onClick = {
             NotificationUtils.showNotification(context, "screen1", 1)
+            // Create a new instance with unique ID to stack on navigation
             navController.navigate("${AppDestinations.SCREEN_1}/${System.currentTimeMillis()}?showCard=false")
         }) {
             Text("Go to Screen 1 (No Card)")
@@ -52,6 +53,7 @@ fun MainContentScreen(navController: NavHostController, viewModel: MainViewModel
 
         Button(onClick = {
             NotificationUtils.showNotification(context, "screen1_with_card", 2)
+            // Create a new instance with unique ID to stack on navigation
             navController.navigate("${AppDestinations.SCREEN_1}/${System.currentTimeMillis()}?showCard=true")
         }) {
             Text("Go to Screen 1 (With Card)")

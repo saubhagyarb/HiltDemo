@@ -4,20 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.*
-import androidx.navigation.compose.*
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.saubh.hiltdemo.ui.AppNavigator
-import com.saubh.hiltdemo.ui.Screen1
-import com.saubh.hiltdemo.ui.Screen2
-import com.saubh.hiltdemo.ui.main.MainViewModel
 import com.saubh.hiltdemo.ui.theme.HiltDemoTheme
 import com.saubh.hiltdemo.utils.NotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,9 +38,7 @@ class MainActivity : ComponentActivity() {
 
                     LaunchedEffect(pendingNavigation) {
                         pendingNavigation?.let { destination ->
-                            navController.navigate(destination) {
-                                restoreState = true
-                            }
+                            navController.navigate(destination)
                             pendingNavigation = null
                         }
                     }
@@ -76,4 +67,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
